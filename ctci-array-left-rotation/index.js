@@ -12,7 +12,7 @@ let currentLine = 0;
 //     inputString += inputStdin;
 // });
 //
-// process.stdin.on('end', _ => {
+// process.stdin.on('end', function() {
 //     inputString = inputString.replace(/\s*$/, '')
 //         .split('\n')
 //         .map(str => str.replace(/\s*$/, ''));
@@ -32,36 +32,34 @@ function readLine() {
     return inputString[currentLine++];
 }
 
-// Complete the sockMerchant function below.
-function sockMerchant(n, ar) {
+// Complete the rotLeft function below.
+function rotLeft(a, d) {
+    const N = a.length;
 
-    const nums = {};
+    d = d % N;
 
-    ar.forEach((num) => {
-        nums[num] = (nums[num] || 0) + 1;
-    });
+    const left = a.slice(0, d);
+    const right = a.slice(d);
 
-    let result = 0;
-
-    for (let color in nums) {
-        const socksAmount = nums[color];
-
-        result += (socksAmount / 2) >> 0;
-    }
-
-    return result;
+    return [...right, ...left];
 }
+
+//  1 2 3 | 4 5
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const n = parseInt(readLine(), 10);
+    const nd = readLine().split(' ');
 
-    const ar = readLine().split(' ').map(arTemp => parseInt(arTemp, 10));
+    const n = parseInt(nd[0], 10);
 
-    let result = sockMerchant(n, ar);
+    const d = parseInt(nd[1], 10);
 
-    ws.write(result + "\n");
+    const a = readLine().split(' ').map(aTemp => parseInt(aTemp, 10));
+
+    const result = rotLeft(a, d);
+
+    ws.write(result.join(' ') + '\n');
 
     ws.end();
 }

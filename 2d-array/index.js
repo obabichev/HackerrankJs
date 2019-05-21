@@ -32,34 +32,38 @@ function readLine() {
     return inputString[currentLine++];
 }
 
-// Complete the sockMerchant function below.
-function sockMerchant(n, ar) {
+// Complete the hourglassSum function below.
+function hourglassSum(arr) {
+    const height = arr.length;
+    const width = arr[0].length;
 
-    const nums = {};
+    let result = -100;
 
-    ar.forEach((num) => {
-        nums[num] = (nums[num] || 0) + 1;
-    });
-
-    let result = 0;
-
-    for (let color in nums) {
-        const socksAmount = nums[color];
-
-        result += (socksAmount / 2) >> 0;
+    for (let i = 0; i < height - 2; i++) {
+        for (let j = 0; j < width - 2; j++) {
+            result = Math.max(countHourGlass(arr, i, j), result);
+        }
     }
 
     return result;
 }
 
+function countHourGlass(arr, i, j){
+    return arr[i][j] + arr[i][j + 1] + arr[i][j + 2]
+        + arr[i + 1][j + 1]
+        + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2];
+}
+
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const n = parseInt(readLine(), 10);
+    let arr = Array(6);
 
-    const ar = readLine().split(' ').map(arTemp => parseInt(arTemp, 10));
+    for (let i = 0; i < 6; i++) {
+        arr[i] = readLine().split(' ').map(arrTemp => parseInt(arrTemp, 10));
+    }
 
-    let result = sockMerchant(n, ar);
+    let result = hourglassSum(arr);
 
     ws.write(result + "\n");
 
