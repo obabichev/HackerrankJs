@@ -35,22 +35,28 @@ function readLine() {
 // Complete the sockMerchant function below.
 function sockMerchant(n, ar) {
 
-    const nums = {};
+    const counts = countSocks(ar);
 
-    ar.forEach((num) => {
-        nums[num] = (nums[num] || 0) + 1;
-    });
+    let countOfpairs = 0;
 
-    let result = 0;
+    for (const color of Object.keys(counts)){
+        const countOfSocks = counts[color];
 
-    for (let color in nums) {
-        const socksAmount = nums[color];
-
-        result += (socksAmount / 2) >> 0;
+        countOfpairs += (countOfSocks - countOfSocks % 2) / 2
     }
 
-    return result;
+    return countOfpairs;
 }
+
+// countOfSocks === 4, countOfpairs = (4 - 0) / 2 === 2
+// countOfSocks === 5, countOfpairs = (5 - 1) / 2 === 2
+
+const countSocks = socks => {
+    const result = {};
+    socks.forEach(sock => result[sock] = (result[sock] || 0) + 1);
+    return result;
+};
+
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);

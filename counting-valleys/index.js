@@ -35,29 +35,28 @@ function readLine() {
 // Complete the countingValleys function below.
 function countingValleys(n, s) {
 
-    let result = 0;
-
     let level = 0;
-    let wasAbove = true;
+    let countVolleys = 0;
+    let wasBelowZero = false;
 
     s.split('').forEach(step => {
         if (step === 'U') {
             level++;
-        }
-        if (step === 'D') {
+        } else {
             level--;
         }
 
-        if (level < 0 && wasAbove) {
-            result++;
-            wasAbove = false;
+        if (level < 0 && !wasBelowZero) {
+            countVolleys++;
+            wasBelowZero = true;
         }
+
         if (level >= 0) {
-            wasAbove = true;
+            wasBelowZero = false;
         }
     });
 
-    return result;
+    return countVolleys;
 }
 
 function main() {

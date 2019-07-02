@@ -22,24 +22,27 @@ function readLine() {
 
 // Complete the repeatedString function below.
 function repeatedString(s, n) {
-    let result = 0;
 
-    result += Math.floor(n / s.length) * countAInString(s);
+    let result = Math.floor(n / s.length) * countA(s);
 
     const restLength = n % s.length;
-
-    if (restLength > 0) {
-        result += countAInString(s.substring(0, restLength));
-    }
+    const restString = s.substring(0, restLength);
+    result += countA(restString);
 
     return result;
 }
 
 // aba aba aba a
 
-function countAInString(s) {
-    return s.split('').filter(char => char === 'a').length;
-}
+const countA = str => {
+    let result = 0;
+    str.split('').forEach(letter => {
+        if (letter === 'a') {
+            result++;
+        }
+    });
+    return result;
+};
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
